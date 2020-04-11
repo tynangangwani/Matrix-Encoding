@@ -7,7 +7,7 @@ def polynomial_encode_py(matA, matB, totalWorkers, divA, divB, alpha, beta):
 
     m=divA
     n=divB
-    
+
     splitsA = torch.split(matA, int(matA.size()[0]/divA), dim=0)
     splitsB= torch.split(matB, int(matB.size()[0]/divB), dim=0)
 
