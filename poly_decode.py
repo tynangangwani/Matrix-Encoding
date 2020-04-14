@@ -12,7 +12,18 @@ def polynomial_decode(results, totalWorkers, workerIDs, m,n, alpha, beta ):
                 encoding_matrix[i,j*m+k]=workerIDs[i]**(j*alpha+k*beta) #need to  be careful about the order of j and m
 
 
-    inverse_encoding=np.linalg.inv(encoding_matrix) #paper says we can find this more efficiently than using traditional inverse
-    #algorithm
+    inverse_encoding=np.linalg.inv(encoding_matrix)
+    print (inverse_encoding)
+    decodeds=[]
+    #multiplies the inverse matrix with the matrix list
 
-    #now need to multiply the matrix with the list of results (so each coefficient is multiplied by a matrix)
+    for j in range(m*n):
+        for k in range(m*n):
+
+            if k==0:
+                temp=inverse_encoding[j,k]*results[k]
+            else:
+                temp+=inverse_encoding[j,k]*results[k]
+        decodeds.append(temp)
+
+    return decodeds
