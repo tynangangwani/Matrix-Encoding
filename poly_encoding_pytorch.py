@@ -1,5 +1,6 @@
 import torch
-
+import numpy as np
+from poly_decode import polynomial_decode
 def polynomial_encode_py(matA, matB, totalWorkers, divA, divB, alpha, beta):
     #takes in matrix A and B, for the computation C=A^t*B, divA and divB
     # correspond to the number of parts A and B will be divided into and
@@ -8,8 +9,8 @@ def polynomial_encode_py(matA, matB, totalWorkers, divA, divB, alpha, beta):
     m=divA
     n=divB
 
-    splitsA = torch.split(matA, int(matA.size()[0]/divA), dim=0)
-    splitsB= torch.split(matB, int(matB.size()[0]/divB), dim=0)
+    splitsA = torch.split(matA, int(matA.size()[0]/divA), dim=1)
+    splitsB= torch.split(matB, int(matB.size()[0]/divB), dim=1)
 
     submatricesA=[]
     submatricesB=[]
