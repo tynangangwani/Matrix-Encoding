@@ -24,7 +24,7 @@ def ifft(Crtn, F, prim_root): #inverse using n^-1 * sum(y*Wn^(-jk))
                 u=Crtn[k]%F
                 Crtn[k]=(u+t)%F
                 Crtn[(k+int(m/2))]=(u-t)%F
-                #print(var[(-j * int(16/m))%length])
+
             #W=(Wm*W) %F
     for i in range(length): #multiplying by the inverse of n
         Crtn[i]=(Crtn[i]*pow(length,F - 2, F))%F
