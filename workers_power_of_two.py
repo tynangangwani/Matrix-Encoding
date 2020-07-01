@@ -22,27 +22,28 @@ ComputationTimes=[]
 DecodingTimes=[]
 ##################### Parameters ########################
 # Use one master and N workers
-N = 66
+N =16
 
 # Matrix division
-m = 8
-n = 8
+m = 3
+n = 3
 
 length=m*n
 # Field size assumed to be prime for this implementation
-F = 18446744073709550593
+F = 65537
 
 # Input matrix size - A: s by r, B: s by t
-s = 1000
-r = 1000
-t = 1000
+s = 120
+r = 120
+t = 120
 
 # Pick a primitive root 64
-rt = rt = pow(3,int(((F-1)/(m*n))), F)
+rt = rt = pow(3,int(((F-1)/(N))), F)
 
 
 # Values of x_i used by 17 workers
-var = [pow(rt, i, F) for i in range(length)] + [pow(3, i, F) for i in range(1, (int(N-length))+1)]
+var = [pow(rt, i, 65537) for i in range(N)]
+#+ [pow(3, i, F) for i in range(1, (int(N-length))+1)]
 #########################################################
 
 A = np.matrix(np.random.randint(0, 255, (r, s)))
@@ -68,7 +69,8 @@ Crtn=[(Aenc[i] * (Benc[i].getT())) % F for i in range(N)]
 
 CompEnd=time.time()
 Copy=Crtn.copy()
-Crtn=[i for i in Copy]
+#no stragglers
+'''
 print("Computation time: "+ str(CompEnd-CompStart)) #node 0 is a straggler
 stragglers=[]
 for i in range(N-length):
@@ -78,7 +80,7 @@ for i in range(N-length):
     del lst[straggler]
 print("Stragglers: "+ str(stragglers))
 print(lst)
-DecStart=time.time()
+
 missing = set(range(m * n)) - set(lst)
 
 # Fast decoding hard coded for m, n = 4
@@ -95,22 +97,27 @@ for i in missing:
         coeff[j] = (coeff[j] * (var[i] - var[k]) * pow(var[lst[j]] - var[k], F - 2, F)) % F
 
   Crtn[i] = sum([ (Crtn[lst[j]] * coeff[j]) for j in range(length)]) % F
+'''
+DecStart=time.time()
 
+Crtn=polycode_ifft(Crtn, F, 3)
+print(Crtn)
 
-Crtn=polycode_ifft(Crtn[0:length], F, 3)
 DecEnd=time.time()
 print("decode time: "+ str(DecEnd-DecStart))
 # Verify correctness
 # Bit reverse the order to match the FFT
 # To obtain outputs in an ordinary order, bit reverse the order of input matrices prior to FFT
 Copy=Crtn.copy()
-for i in range(length): #bit reverse
-    format_str='{:0'+str(int((math.log(length,2))))+'b}'
+for i in range(N): #bit reverse
+    format_str='{:0'+str(int((math.log(N,2))))+'b}'
     bit_rev=int(format_str.format(i)[::-1], 2)
     Crtn[i]=Copy[bit_rev]
+
 #bit_reverse = [0, 2, 1, 3]
 #Cver = [(Ap[bit_reverse[int(i / 4)]] * Bp[bit_reverse[i % 4]].getT()) % F for i in range(m * n)]
 Cver = [(Ap[int(i %m)] * Bp[int(i / m)].getT()) % F for i in range(m * n)]
+print(Cver)
 
 #print(Cver)
 #print(Crtn)
