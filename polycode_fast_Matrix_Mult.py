@@ -34,9 +34,9 @@ length=m*n
 F =23725313
 
 # Input matrix size - A: s by r, B: s by t
-s = 16
-r = 16
-t = 16
+s = 4000
+r = 4000
+t = 4000
 
 # Pick a primitive root 64
 prim_root=3
