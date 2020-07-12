@@ -42,7 +42,7 @@ t = 16
 prim_root=3
 rt= pow(prim_root,int(((F-1)/(m*n))), F)
 
-var = [pow(rt, i, F) for i in range(length)] + [pow(prim_root, i, F) for i in range(1, (int(N-length))+1)]
+var = [pow(rt, i, F) for i in range(length)] + [pow(prim_root, i, F) for i in range(1, (int(N-length))+1) if (i%int(((F-1)/(m*n)))!=0)]
 
 #########################################################
 

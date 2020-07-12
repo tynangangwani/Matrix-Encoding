@@ -71,9 +71,9 @@ if comm.rank == 0:
   # Encode the matrices
   encStart=time.time()
   temp=Ap[0:m].copy()
-  #Aenc= fft(temp, F, prim_root)
-  #Aenc=Aenc+ [sum([Ap[j] * (pow(var[i], j, F)) for j in range(m)]) % F for i in range(m, N)]
-  Aenc=[sum([Ap[j] * (pow(var[i], j, F)) for j in range(m)]) % F for i in range(N)]
+  Aenc= fft(temp, F, prim_root)
+  Aenc=Aenc+ [sum([Ap[j] * (pow(var[i], j, F)) for j in range(m)]) % F for i in range(m, N)]
+  #Aenc=[sum([Ap[j] * (pow(var[i], j, F)) for j in range(m)]) % F for i in range(N)]
   encEnd=time.time()
   print("time spent Encoding is: " + str(encEnd-encStart))
   #Benc= [sum([Bp[j] * (pow(var[i], j * m, F)) for j in range(n)]) % F for i in range(N)]
