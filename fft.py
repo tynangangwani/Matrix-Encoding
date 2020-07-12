@@ -49,22 +49,25 @@ def polycode_ifft(Crtn, F, prim_root): #inverse using polycode method
                 Crtn[base + int(jump/2)] = ((Crtn[base] - Crtn[base + int(jump/2)]) * var[(-i * int(block_num))%length]) % F
 
             #W=(Wm*W) %F
-    Copy=Crtn.copy()
+    #Copy=Crtn.copy()
+    '''
     for i in range(length): #bit reverse
         format_str='{:0'+str(int((math.log(length,2))))+'b}'
         bit_rev=int(format_str.format(i)[::-1], 2)
 
         Crtn[i]=Copy[bit_rev]
+        '''
 
     return Crtn
-#print(ifft([10,510,65535,65023], 65537, 3)) #evaluations of a degree 3 polynomial with coefficients 1,2,3,4 at 4th roots of unity
-t=fft([1, 5, 4, 2, 8, 1, 0, 0], 65537, 3)
+'''
+#print(fft([10,510,65535,65023], 4294957057, 10)) #evaluations of a degree 3 polynomial with coefficients 1,2,3,4 at 4th roots of unity
+t=fft([3453249, 4106606894,439307577, 2356111468,4142483687, 22222222, 0, 0], 4294957057, 10)
 print(t)
-t[5]=t[5]+1
-t[6]=t[6]+1
-t[7]=t[7]+1
-print(polycode_ifft(t ,65537, 3))
-#for a simple test case
+#t[5]=t[5]+1
+#t[6]=t[6]+1
+#t[7]=t[7]+1
+print(polycode_ifft(t ,4294957057, 10))
 #print(polycode_ifft([10,510,65535,65023], 65537, 3))
 #10,510,65535,65023
 #1,2,3,4 #expected resultss
+'''
