@@ -23,20 +23,20 @@ def loop():
 
 ##################### Parameters ########################
 # Use one master and N workers
-N = 35
+N = 50
 
 # Matrix division
 m = 4
-n = 8
+n = 4
 
 length=m*n
 # Field size assumed to be prime for this implementation
 F =23725313
 
 # Input matrix size - A: s by r, B: s by t
-s = 4000
-r = 4000
-t = 4000
+s = 256
+r = 256
+t = 256
 
 # Pick a primitive root 64
 prim_root=3
@@ -124,19 +124,20 @@ if comm.rank == 0:
             coeff[j] = (coeff[j] * (var[i] - var[k]) * pow(var[lst[j]] - var[k], F - 2, F)) % F
 
       Crtn[i] = sum([ (Crtn[lst[j]] * coeff[j]) for j in range(length)]) % F
-      print(i)
-      print(Crtn[i])
+      #print(i)
+      #print(Crtn[i])
 
 
   Crtn=polycode_ifft(Crtn[0:length], F, prim_root)
   bp_done = time.time()
   print ("Time spent decoding is: %f" % (bp_done - bp_received))
 
-  Copy=Crtn.copy()
-  for i in range(length): #bit reverse
-      format_str='{:0'+str(int((math.log(length,2))))+'b}'
-      bit_rev=int(format_str.format(i)[::-1], 2)
-      Crtn[i]=Copy[bit_rev]
+  #Copy=Crtn.copy()
+  format_str='{:0'+str(int((math.log(length,2))))+'b}'
+  #for i in range(length): #bit reverse
+
+      #bit_rev=int(format_str.format(i)[::-1], 2)
+      #Crtn[i]=Copy[bit_rev]
 
   #bit_reverse = [0, 2, 1, 3]
   #Cver = [(Ap[bit_reverse[int(i / 4)]] * Bp[bit_reverse[i % 4]].getT()) % F for i in range(m * n)]
@@ -144,7 +145,7 @@ if comm.rank == 0:
 
   #print(Cver)
   #print(Crtn)
-  print ([np.array_equal(Crtn[i], Cver[i]) for i in range(m * n)])
+  print ([np.array_equal(Crtn[int(format_str.format(i)[::-1], 2)], Cver[i]) for i in range(m * n)])
 else:
   # Worker
   # Receive straggler information from the master
