@@ -137,7 +137,7 @@ if comm.rank == 0:
   if all(parity_check):
       print("no errors")
   else:
-      print("no errors")
+      print("errors")
   #Copy=Crtn.copy()
 
   #for i in range(length): #bit reverse
