@@ -141,7 +141,7 @@ if comm.rank == 0:
   if all(parity_check):
       print("no errors")
   else:
-      print("no errors")
+      print("errors")
   decEnd=time.time()
   print("time spent decoding is: ", decEnd-decStart)
   #Copy=Crtn.copy()
