@@ -24,7 +24,7 @@ def loop():
 ##################### Parameters ########################
 # Use one master and N workers
 N = 16
-
+error_node=random.randint(1,N)
 # Matrix division
 m = 3
 n = 5
@@ -183,7 +183,7 @@ else:
       t.start()
   '''
   Ci = (Ai * (Bi.getT())) % F
-  if comm.rank ==(random.randint(1,N)):
+  if comm.rank ==error_node:
     Ci=(np.random.randint(0,255,Ci.shape)+Ci) % F
   wbp_done = time.time()
   # print "Worker %d computing takes: %f\n" % (comm.Get_rank(), wbp_done - wbp_received)
