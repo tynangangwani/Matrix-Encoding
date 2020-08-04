@@ -24,7 +24,7 @@ def loop():
 
 comm = MPI.COMM_WORLD
 parameters=[(16,2,2), (16,2,4),(16,3,3),(16,3,4),(16,5,3), (16, 15,1)]
-dimensions=[(24,32,32)]
+dimensions=[(2400,3200,3200)]
 EncodingData={}
 WaitData={}
 SendData={}
