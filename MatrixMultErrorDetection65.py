@@ -23,8 +23,8 @@ def loop():
     a = 1 + 1
 
 comm = MPI.COMM_WORLD
-parameters=[(16,2,2), (16,2,4),(16,3,3),(16,3,4),(16,5,3), (16, 15,1)]
-dimensions=[(24,32,32)]
+parameters=[(64, 4,2), (64, 4,3), (64,4,4), (64, 4,6), (64,4,8), (64,6,8), (64,7,8), (64,7,9)]
+dimensions=[(2400,3200,3200)]
 EncodingData={}
 WaitData={}
 SendData={}
@@ -191,9 +191,8 @@ for N,m,n in parameters:
         WaitData[(N,m,n,s,r,t)]=(avgWait, stdWait)
         DecData[(N,m,n,s,r,t)]=(avgDec, stdDec)
 if comm.rank==0:
-    w = csv.writer(open("Poly_Times.csv", "w"))
-    w.writerow(["parameters", (""), "EncTimeMean", "EncTimeStdev", "", "WaitTimeMean", "WaitTimestdev",(""),"SendTimeMean", "SendTimestdev",(""),
-    "DecTimeMean", "DecTimeStdev" ] )
+    w = csv.writer(open("Poly_Times.csv", "a"))
+
     for key, val in EncodingData.items():
         w.writerow([key, (""),  val[0], val[1], (""), WaitData[key][0], WaitData[key][1],(""),SendData[key][0], SendData[key][1],(""),
         DecData[key][0], DecData[key][1] ] )
