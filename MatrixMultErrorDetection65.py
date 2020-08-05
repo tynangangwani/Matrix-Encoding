@@ -33,7 +33,7 @@ DecData={}
 
 for N,m,n in parameters:
     for s,r,t in dimensions:
-
+        print("program running")
         ##################### Parameters ########################
         # Use one master and N workers
         length=N

@@ -25,7 +25,7 @@ def loop():
 
 comm = MPI.COMM_WORLD
 parameters=[(16,2,2), (16,2,4),(16,3,3),(16,3,4),(16,5,3), (16, 15,1)]
-dimensions=[(2000,3000,3000)]
+dimensions=[(2400,3200,3200)]
 EncodingData={}
 WaitData={}
 SendData={}
@@ -33,6 +33,7 @@ DecData={}
 
 for N,m,n in parameters:
     for s,r,t in dimensions:
+        print("program running")
 
         ##################### Parameters ########################
         # Use one master and N workers
