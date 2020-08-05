@@ -157,7 +157,7 @@ for N,m,n in parameters:
               Ap=[]
               Bp=[]
               Aenc=[]
-              Benc[]
+              Benc=[]
               Crtn=[]
               gc.collect()
             else:
