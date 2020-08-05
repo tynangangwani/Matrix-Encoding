@@ -33,7 +33,8 @@ DecData={}
 
 for N,m,n in parameters:
     for s,r,t in dimensions:
-        print("program running")
+        if comm.rank==0:
+            print("program running")
 
         ##################### Parameters ########################
         # Use one master and N workers
