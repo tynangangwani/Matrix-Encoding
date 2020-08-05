@@ -11,6 +11,7 @@ import time
 from fft import polycode_ifft
 import math
 import statistics
+import gc
 
 # Change to True for more accurate timing, sacrificing performance
 barrier = True
@@ -150,6 +151,14 @@ for N,m,n in parameters:
               #print(Cver)
               #print(Crtn)
               #print ([np.array_equal(Crtn[int(format_str.format(i)[::-1], 2)], Cver[i]) for i in range(m * n)])
+              A=[]
+              B=[]
+              Ap=[]
+              Bp=[]
+              Aenc=[]
+              Benc[]
+              Crtn=[]
+              gc.collect()
             else:
               # Worker
               # Receive straggler information from the master

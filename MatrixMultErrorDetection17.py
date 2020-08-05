@@ -3,6 +3,7 @@
 Polynomial code with fast decoding
 '''
 import csv
+import gc
 from mpi4py import MPI
 import numpy as np
 import random
@@ -150,6 +151,14 @@ for N,m,n in parameters:
               #print(Cver)
               #print(Crtn)
               #print ([np.array_equal(Crtn[int(format_str.format(i)[::-1], 2)], Cver[i]) for i in range(m * n)])
+              A=[]
+              B=[]
+              Ap=[]
+              Bp=[]
+              Aenc=[]
+              Benc[]
+              Crtn=[]
+              gc.collect()
             else:
               # Worker
               # Receive straggler information from the master
