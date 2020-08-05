@@ -25,7 +25,7 @@ def loop():
 
 comm = MPI.COMM_WORLD
 parameters=[(32,4,2), (32,4,3),(32, 4,4),(32, 4,5), (32,5,5), (32, 6,6)]
-dimensions=[(2400,3200,3200)]
+dimensions=[(2000,3000,3000)]
 EncodingData={}
 WaitData={}
 SendData={}
@@ -60,7 +60,7 @@ for N,m,n in parameters:
         sendTimes=[]
         waitTimes=[]
         decTimes=[]
-        for repeat in range(20i):
+        for repeat in range(20):
             if comm.rank == 0:
               # Master
               #print ("Running with %d processes:" % comm.Get_size())
