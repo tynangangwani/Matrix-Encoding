@@ -37,9 +37,9 @@ parameters=[(2,2, 5), (2,2, 6), (2,2, 7), (2,4, 9), (2,4,11), (2,4,13), (2,4,15)
 F = 65537
 
 # Input matrix size - A: s by r, B: s by t
-s = 2048
-r = 2048
-t = 2048
+s = 128
+r = 128
+t = 128
 
 # Pick a primitive root 64
 
@@ -47,6 +47,8 @@ for (m,n,N) in parameters:
     EncSamples=[]
     CompSamples=[]
     DecSamples=[]
+    r*=m
+    t*=n
     for sample in range(10):
 
         length=m*n
@@ -143,7 +145,7 @@ for (m,n,N) in parameters:
     DecodingTimes[(m,n,N)]=(DecTimeMean, DecTimeStdev)
     #print((CompTimeMean, CompTimeStdev))
     print("done "+ str((m,n,N)) )
-w = csv.writer(open("Poly_Times2048.csv", "w"))
+w = csv.writer(open("Poly_Times512.csv", "w"))
 w.writerow(["parameters", "EncTimeMean", "EncTimeStdev", "", "CompTimeMean", "CompTimestdev",(""),
 "DecTimeMean", "DecTimeStdev" ] )
 for key, val in EncodingTimes.items():

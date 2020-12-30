@@ -23,20 +23,20 @@ def loop():
 
 ##################### Parameters ########################
 # Use one master and N workers
-N = 32
+N = 16
 
 # Matrix division
-m = 4
-n = 4
+m = 3
+n = 5
 
 length=N
 # Field size assumed to be prime for this implementation
 F =23725313
 
 # Input matrix size - A: s by r, B: s by t
-s = 256
-r = 256
-t = 256
+s = 300
+r = 300
+t = 300
 
 # Pick a primitive root 64
 prim_root=3

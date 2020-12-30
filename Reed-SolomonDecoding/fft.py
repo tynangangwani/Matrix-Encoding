@@ -1,7 +1,6 @@
 import math
-import numpy as np
-
-def fft(Crtn, F, prim_root): #inverse using n^-1 * sum(y*Wn^(-jk))
+def fft(Arr, F, prim_root): #inverse using n^-1 * sum(y*Wn^(-jk))
+    Crtn=Arr.copy()
     length=len(Crtn)
     rt=pow(prim_root, int((F-1)/length), F)
     var=([pow(rt, i, F) for i in range(length)])
@@ -9,6 +8,7 @@ def fft(Crtn, F, prim_root): #inverse using n^-1 * sum(y*Wn^(-jk))
     for i in range(length): #bit reverse
         format_str='{:0'+str(int((math.log(length,2))))+'b}'
         bit_rev=int(format_str.format(i)[::-1], 2)
+
         Crtn[i]=Copy[bit_rev]
 
     for s in range(1,int((math.log(length,2)))+1): #generic fft algorithm
@@ -28,7 +28,8 @@ def fft(Crtn, F, prim_root): #inverse using n^-1 * sum(y*Wn^(-jk))
 #    for i in range(length): #multiplying by the inverse of n
 #        Crtn[i]=(Crtn[i]*pow(length,F - 2, F))%F
     return Crtn
-def polycode_ifft(Crtn, F, prim_root): #inverse using polycode method
+def polycode_ifft(Arr, F, prim_root): #inverse using polycode method
+    Crtn=Arr.copy()
     length=len(Crtn)
     rt=pow(prim_root, int((F-1)/length), F)
     var = [pow(rt, i, F) for i in range(length)]
@@ -58,23 +59,24 @@ def polycode_ifft(Crtn, F, prim_root): #inverse using polycode method
 
 
     return Crtn
-'''
+
 #print(fft([10,510,65535,65023], 4294957057, 10)) #evaluations of a degree 3 polynomial with coefficients 1,2,3,4 at 4th roots of unity
-t=fft([3453249, 4106606894,439307577, 2356111468,4142483687, 22222222, 0, 0], 4294957057, 10)
+t=[1, 2, 3 ,4, 0 ,0,0,0 ]
+t=fft(t,65537,3)
+#t=fft([3453249, 4106606894,439307577, 2356111468,4142483687, 22222222, 0, 0], 4294957057, 10)
 print(t)
+t[5]=t[5]+5%65537
+t[6]=t[6]+234%65537
+print(polycode_ifft(t, 65537, 3))
+print(fft(t, 65537, 3))
+#s=fft(t, 4294957057, 10)
+#print(s)
 #t[5]=t[5]+1
 #t[6]=t[6]+1
 #t[7]=t[7]+1
+s=fft(t, 4294957057, 10)
+print(s)
 print(polycode_ifft(t ,4294957057, 10))
 #print(polycode_ifft([10,510,65535,65023], 65537, 3))
 #10,510,65535,65023
 #1,2,3,4 #expected resultss
-'''
-F=17
-prim_root=3
-A=[np.random.randint(0,10, (2,2)) for i in range(2)]+[np.zeros((2,2), dtype='int')]*2
-print(A)
-Aenc=fft(A, F, prim_root)
-print(Aenc)
-Adec=polycode_ifft(A, F, prim_root)
-print(Adec)
