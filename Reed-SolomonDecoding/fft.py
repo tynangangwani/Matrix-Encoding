@@ -59,7 +59,7 @@ def polycode_ifft(Arr, F, prim_root): #inverse using polycode method
 
 
     return Crtn
-
+'''
 #print(fft([10,510,65535,65023], 4294957057, 10)) #evaluations of a degree 3 polynomial with coefficients 1,2,3,4 at 4th roots of unity
 t=[1, 2, 3 ,4, 0 ,0,0,0 ]
 t=fft(t,65537,3)
@@ -79,4 +79,4 @@ print(s)
 print(polycode_ifft(t ,4294957057, 10))
 #print(polycode_ifft([10,510,65535,65023], 65537, 3))
 #10,510,65535,65023
-#1,2,3,4 #expected resultss
+#1,2,3,4 #expected resultss'''

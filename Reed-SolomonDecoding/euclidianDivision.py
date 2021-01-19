@@ -99,7 +99,7 @@ def decodeRS(n,k,Crtn, F=65537, prim_root=3):
     else:
         print(corr,r)
         return "error decoding"
-
+'''
 
 n,k=16,8
 for i in range(1):
@@ -120,6 +120,7 @@ for i in range(1):
         print("error.")
         print(Correct_msg)
         print (corr)
+'''
 '''
 F=65537
 prim_root=3

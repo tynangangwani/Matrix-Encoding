@@ -102,7 +102,9 @@ def decodeRS(Crtn):
     #print(G1)
     #correct_msg=polycode_ifft(coded, 65537, 3)
     g,v=extended_gcd(G1,G0, int((n+k)/2))
-
+    print("error locator polynomial:")
+    temp=[ (i* (pow(int(v[0]), F-2, F)))%F for i in v]
+    print(temp)
     corr,r=euclidianDivision(g, v, 65537, 3)
     if(len(corr)<=k and not r.any()):
         return corr
@@ -111,6 +113,19 @@ def decodeRS(Crtn):
 
 
 n,k=8,4
+
+t=[1, 2, 3 ,4, 0 ,0,0,0 ]
+t=fft(t,65537,3)
+#t=fft([3453249, 4106606894,439307577, 2356111468,4142483687, 22222222, 0, 0], 4294957057, 10)
+F=65537
+print("start")
+print(t)
+t[5]=t[5]+5%65537
+#t[6]=t[6]+234%65537
+t=np.asarray(t)
+a= decodeRS(t)
+print ("corrected: ")
+print(a)
 '''for i in range(1):
     dim=100
     msg=np.asarray([np.random.randint(0,65536, (dim,dim)) for i in range(k)]+[np.zeros((dim,dim), dtype=int)]*(n-k))
