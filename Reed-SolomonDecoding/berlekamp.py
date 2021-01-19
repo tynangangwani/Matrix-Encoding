@@ -132,6 +132,9 @@ def berlekamp(length, msgLen, code, F, prim_root):
              #C(x) = C(x) - d b^{-1} x^m B(x);
              B=Btemp
              m = m + 1
+    if(L+1> len(X)):
+        return "error decoding"
+        
     return (X,L,d)
 (X,L,d)=berlekamp(16, 4,t, 65537, 3 )
 print("d:")
