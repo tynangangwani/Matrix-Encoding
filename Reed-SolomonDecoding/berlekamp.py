@@ -23,7 +23,7 @@ dimensions=100
 #(k,n) code, F is the field and prim root is the primitve root of the field
 
 length=16
-msgLen=4
+msgLen=6
 t=([np.random.randint(0,65536, (dimensions,dimensions)) for i in range(msgLen)]+[np.zeros((dimensions,dimensions), dtype=int)]*(length-msgLen))
 F=65537
 prim_root=3
@@ -42,9 +42,9 @@ t[5]=t[5]+np.random.randint(0,65536, (dimensions,dimensions))
 t[6]=t[6]+np.random.randint(0,65536, (dimensions,dimensions))
 t[7]=t[7]+np.random.randint(0,65536, (dimensions,dimensions))
 
-#[2]=t[2]+np.random.randint(0,65536, (dimensions,dimensions))
+t[2]=t[2]+np.random.randint(0,65536, (dimensions,dimensions))
 
-#t[1]=t[1]+np.random.randint(0,65536, (dim,dim))
+t[1]=t[1]+np.random.randint(0,65536, (dimensions,dimensions))
 #t[9]=t[9]+45645%65537
 #print(polycode_ifft(t, 65537, 3))
 
@@ -132,17 +132,30 @@ def berlekamp(length, msgLen, code, F, prim_root):
              #C(x) = C(x) - d b^{-1} x^m B(x);
              B=Btemp
              m = m + 1
+    print(L)
+    print(len(X))
     if(L+1> len(X)):
-        return "error decoding"
-        
-    return (X,L,d)
-(X,L,d)=berlekamp(16, 4,t, 65537, 3 )
-print("d:")
+        return [-1]
+    error_locations=[]
+    for i in range(length):
+        #print("Evaluated at "+str(i)+"^-1")
+        X_alpha=eval(pow(alpha, length-i, F),X, F)
+        if np.any(X_alpha==0):
+            error_locations.append(i)
+    if len(error_locations)+1 != len(X):
+        print(error_locations)
+        return [-1]
+    else:
+        return error_locations
+
+
+    #return (X,L,d)
+error_locations=berlekamp(length, msgLen,t, 65537, 3 )
+print(error_locations)
 #print(d)
-print("error locator berlekamp")
-print(X)
-print("L:" + str(L)+"and degree"+str(len(X)-1))
-for i in range(length):
-    print("Evaluated at "+str(i)+"^-1")
-    print(eval(pow(alpha, length-i, F),X, F))
+#print("error locator berlekamp")
+#rint(X)
+print("error locations")
+print(error_locations)
+
 #  return L
