@@ -51,8 +51,8 @@ t[1]=t[1]+np.random.randint(0,65536, (dimensions,dimensions))
 #t=fft(t, 65537, 3)
 print(t)
 
-def berlekamp(length, msgLen, code, F, prim_root):
-
+def berlekamp(msgLen, code, F, prim_root):
+    length=len(code)
     dim=np.shape(code[0])
     print(dim)
     L = 0
@@ -97,6 +97,8 @@ def berlekamp(length, msgLen, code, F, prim_root):
              # print(B)
               B=[np.zeros(dim, dtype=int)]*m + B
               #print(B)
+
+               ###### Multiplying two polynomials per element######
               if len(X)>len(B):
                   B=B+[np.zeros(dim, dtype=int)]*(len(X)-len(B))
               else:
@@ -106,7 +108,7 @@ def berlekamp(length, msgLen, code, F, prim_root):
 
               normalize(X)
               normalize(B)
-
+               ###############################
              # C(x) - d b^{-1} x^m B(x);
               L = n + 1 - L
               B = T
@@ -119,6 +121,8 @@ def berlekamp(length, msgLen, code, F, prim_root):
              temp = [np.zeros(dim, dtype=int)]*degree
              Btemp=B
              B=[np.zeros(dim, dtype=int)]*m + B
+
+             ###### Multiplying two polynomials per element######
              if len(X)>len(B):
                  B=B+[np.zeros(dim, dtype=int)]*(len(X)-len(B))
              else:
@@ -127,7 +131,7 @@ def berlekamp(length, msgLen, code, F, prim_root):
              X=[(X[i]- (np.multiply(matrixPow(b, F-2, F), np.multiply(d, B[i]) ) ) )%F for i in range(len(X))]
              normalize(X)
              normalize(B)
-
+            ##########################
 
              #C(x) = C(x) - d b^{-1} x^m B(x);
              B=Btemp
