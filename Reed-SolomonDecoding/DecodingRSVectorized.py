@@ -10,13 +10,13 @@ def normalize(poly):
 
     while len(poly)!=0 and (not poly[-1].any()):
         poly=np.delete(poly, -1)
-        #print(poly)
+        #print(poly) [1,3,0,0] = 1 + 3x+ 0x^2+ 0x^3
 
-    if len(poly)==0:
+    if len(poly)==0: # [0]
         return np.zeros([1], dtype=int)
     return poly
 
-def euclidianDivision(a, b, F=65537, prim_root=3):
+def euclidianDivision(a, b, F=65537, prim_root=3): #dividing a by b returns quotient and remainder
     b=normalize(b)
     a=normalize(a)
     q=np.zeros([len(a)+1-len(b)], dtype=int)
@@ -32,6 +32,21 @@ def euclidianDivision(a, b, F=65537, prim_root=3):
         r=normalize(r)
 
     return q,r
+
+def euclidianAlg(a , b , F=65537, prim_root=3):
+    quotients = []
+    remainders = []
+    q,r = euclidianDivision(a,b)  #a = bq +r_0
+    divisor =b
+    quotients.append(q)
+    remainders.apppend(r)
+    while(r.len()!=1):
+        q,r_i = euclidianDivision(divisor, r) #divisor = qr_(i) + r_(i+1)
+        divisor = r
+        r = r_i
+        quotients.append(q)
+        remainders.apppend(r_i)
+    return quotients,remainders
 
 def polyMultiply(a,b, F=65537, prim_root=3): #uses fft to multiply polynomials in (nlogn)
     if(len(a)==0 or len(b)==0):
